@@ -14,8 +14,9 @@
 
 
 Oczywiście w "dsJndiName" podajesz swojego DataSource'a.
-Chyba nie ma problemu żebym ja robił na MySQLu, a Ty na Postgesie.
-Odpal sobie creation.sql przed włączeniem apki.
+Może ja bym robił na MySQLu, a Ty na Postgesie, tylko wydaje mi się że wtedy musisz zmienić u siebie w persistence.xml żeby baza Ci się sama generowała na starcie, bo ja mam ustawioną opcję że sam tworzę bazę. Albo możesz u siebie w postgresie zrobić kalkę tej bazy danych.
+Ja nigdy nie generowałem bazy automatycznie więc nie wiem czy to zadziała ot tak.
+
 
 W bazie są dwa usery:
 ===========================
