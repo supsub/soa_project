@@ -7,11 +7,12 @@ import lombok.Getter;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import java.util.List;
 
 @Getter
-@Stateful
+@Stateless
 @Remote(IUsersService.class)
 public class UsersService implements IUsersService {
 
