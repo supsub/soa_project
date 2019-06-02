@@ -24,4 +24,8 @@ public class Zone implements Serializable {
 
     @OneToMany(mappedBy = "zone")
     private List<Street> streets;
+
+    @OneToOne
+    @JoinColumn(name = "login")
+    private User owner;
 }

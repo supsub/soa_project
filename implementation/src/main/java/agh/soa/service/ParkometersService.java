@@ -1,6 +1,5 @@
 package agh.soa.service;
 
-import agh.soa.IParkometersService;
 import agh.soa.model.User;
 import agh.soa.repository.UserRepository;
 import lombok.Getter;
@@ -15,11 +14,4 @@ import java.util.List;
 @Remote(IParkometersService.class)
 public class ParkometersService implements IParkometersService {
 
-    @EJB
-    private UserRepository userRepository;
-
-    @Override
-    public List<User> getUsers() {
-        return userRepository.getUsers();
-    }
 }

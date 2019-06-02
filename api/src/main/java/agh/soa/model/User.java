@@ -26,8 +26,7 @@ public class User implements Serializable {
     private String role;
 
     @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "idzone")
+    @OneToOne(mappedBy = "owner")
     private Zone zone;
 
     @JsonIgnore

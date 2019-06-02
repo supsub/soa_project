@@ -20,7 +20,7 @@
     <h:form>
         <h:outputLabel id="counter" value="Value: #{testView.counter.number}"/><br/>
         <p:commandButton value="Increment!" update="counter" action="#{testView.increment()}"/>
-        <p:commandButton value="Decrement! (only for Managers)" update="counter" action="#{testView.decrement()}"/>
+        <p:commandButton value="Decrement! (only for Managers)" disabled="#{userSession.role.equals('User')}" update="counter" action="#{testView.decrement()}"/>
 
     </h:form>
 

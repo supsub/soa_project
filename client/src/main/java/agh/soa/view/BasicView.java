@@ -1,23 +1,23 @@
 package agh.soa.view;
 
-import agh.soa.IParkometersService;
+import agh.soa.service.IParkometersService;
 import agh.soa.model.User;
+import agh.soa.service.IUsersService;
 import lombok.Data;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.inject.Inject;
 import java.util.List;
 
 @ManagedBean
 @Data
 public class BasicView {
 
-    @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/ParkometersService")
-    IParkometersService parkometersService;
+    @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/UsersService")
+    IUsersService usersService;
 
     public List<User> getUsers(){
-        return parkometersService.getUsers();
+        return usersService.getUsers();
     }
 
 

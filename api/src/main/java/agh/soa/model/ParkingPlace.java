@@ -18,6 +18,9 @@ public class ParkingPlace implements Serializable {
     @Column(name = "ordinal_number")
     private int ordinalNumber;
 
+    @Column(name = "taken")
+    private boolean taken;
+
     @ManyToOne
     @JoinColumn(name = "idparkometer")
     private Parkometer parkometer;
