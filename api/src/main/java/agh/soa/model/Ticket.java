@@ -19,7 +19,7 @@ public class Ticket implements Serializable {
     private int id;
 
     @Column(name="expiration_time")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date expirationTime;
 
     @ManyToOne
@@ -30,5 +30,9 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "idparking_place")
     private ParkingPlace parkingPlace;
 
-
+    public Ticket(Date expirationTime, User user, ParkingPlace parkingPlace) {
+        this.expirationTime = expirationTime;
+        this.user = user;
+        this.parkingPlace = parkingPlace;
+    }
 }
