@@ -12,11 +12,11 @@ import javax.jws.soap.SOAPBinding;
 public interface IParkingService {
 
     @WebMethod
-    boolean isEmpty(@WebParam(name = "stringValue") ParkingPlace place);
+    boolean isEmpty(@WebParam(name = "parkingPlace") ParkingPlace place);
 
     @WebMethod
-    boolean takePlace(@WebParam(name = "stringValue") ParkingPlace place);
+    boolean takePlace(@WebParam(name = "parkingPlace") ParkingPlace place);
 
     @WebMethod
-    boolean freePlace(@WebParam(name = "stringValue") ParkingPlace place);
+    boolean freePlace(@WebParam(name = "parkingPlace") ParkingPlace place);
 }

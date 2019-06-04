@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+</h:head>
+
+<h:body>
+    <h:form>
+        <h:inputTextarea value="#{parkingClient.ordinalNumberTake}" required="true"/><br/>
+        <h:commandButton value="take" action="#{parkingClient.takeParkingPlace()}"/>
+    </h:form>
+    <h:form>
+        <h:outputText id="takeInfoPositive"
+                      value="Place #{parkingClient.ordinalNumberTake} taken!"
+                      rendered="#{parkingClient.parkingPlaceSuccessfullyTaken}"> </h:outputText>
+        <h:outputText id="takeInfoNegative"
+                      value="Place #{parkingClient.ordinalNumberTake} is already taken!"
+                      rendered="#{parkingClient.ordinalNumberTake>0 } and #{parkingClient.parkingPlaceSuccessfullyTaken == false}"> </h:outputText>
+    </h:form>
+
+
+    <br/>
+    <br/>
+    <h:form>
+        <h:inputTextarea value="#{parkingClient.ordinalNumberFree}" required="true"/><br/>
+        <h:commandButton value="free" action="#{parkingClient.freeParkingPlace()}"/>
+    </h:form>
+    <h:form>
+        <h:outputText id="freeInfoPositive"
+                      value="Place #{parkingClient.ordinalNumberFree} was freed!"
+                      rendered="#{parkingClient.parkingPlaceSuccessfullyFreed}"> </h:outputText>
+        <h:outputText id="freeInfoNegative"
+                      value="Place #{parkingClient.ordinalNumberFree} is already free!!"
+                      rendered="#{parkingClient.ordinalNumberFree > 0} and #{parkingClient.parkingPlaceSuccessfullyFreed == false}"> </h:outputText>
+    </h:form>
+
+    <br/>
+    <br/>
+    <h:form>
+        <h:inputTextarea value="#{parkingClient.ordinalNumberEmpty}" required="true"/><br/>
+        <h:commandButton value="is this id free" action="#{parkingClient.checkOccupancy()}"/>
+    </h:form>
+
+    <h:form>
+        <h:outputText id="emptyInfoPositive"
+                      rendered="#{parkingClient.parkingPlaceEmpty}"
+                      value="Place #{parkingClient.ordinalNumberEmpty} empty!"> </h:outputText>
+
+        <h:outputText id="emptyInfoNegative"
+                      rendered="#{!parkingClient.parkingPlaceEmpty} and #{parkingClient.ordinalNumberEmpty >0}"
+                      value="Place #{parkingClient.ordinalNumberEmpty} taken!"> </h:outputText>
+    </h:form>
+
+
+</h:body>
+</html>
