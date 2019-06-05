@@ -6,8 +6,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.ws.Action;
 
 
 /**
@@ -16,8 +14,9 @@ import javax.xml.ws.Action;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "IParkingService", targetNamespace = "http://soa.agh/")
+@WebService(name = "IParkingService", targetNamespace = "http://soap.soa.agh/")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
+
 public interface IParkingService {
 
 
@@ -29,20 +28,6 @@ public interface IParkingService {
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://soa.agh/IParkingService/isEmptyRequest", output = "http://soa.agh/IParkingService/isEmptyResponse")
-    public boolean isEmpty(
-        @WebParam(name = "parkingPlace", partName = "parkingPlace")
-        ParkingPlace parkingPlace);
-
-    /**
-     * 
-     * @param parkingPlace
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://soa.agh/IParkingService/freePlaceRequest", output = "http://soa.agh/IParkingService/freePlaceResponse")
     public boolean freePlace(
         @WebParam(name = "parkingPlace", partName = "parkingPlace")
         ParkingPlace parkingPlace);
@@ -55,7 +40,6 @@ public interface IParkingService {
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://soa.agh/IParkingService/takePlaceRequest", output = "http://soa.agh/IParkingService/takePlaceResponse")
     public boolean takePlace(
         @WebParam(name = "parkingPlace", partName = "parkingPlace")
         ParkingPlace parkingPlace);

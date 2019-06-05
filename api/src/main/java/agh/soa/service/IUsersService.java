@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IUsersService {
 
+    String getTestValue();
+
     List<User> getUsers();
 }
