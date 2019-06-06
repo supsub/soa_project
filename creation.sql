@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `parking_places`
   `ordinal_number`  INT(11) NOT NULL,
   `idparkometer`    INT(11) NOT NULL,
   `taken`  boolean NOT NULL,
+  `last_taken_time` DATETIME    NOT NULL,
   PRIMARY KEY (`idparking_place`),
   INDEX `fk_parking_places_parkometers1_idx` (`idparkometer` ASC) VISIBLE,
   CONSTRAINT `fk_parking_places_parkometers1`
