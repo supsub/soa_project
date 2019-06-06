@@ -1,4 +1,4 @@
-package agh.soa.soap;
+package agh.soa.soapController;
 
 import agh.soa.model.ParkingPlace;
 

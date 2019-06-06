@@ -1,4 +1,4 @@
-package agh.soa.soap;
+package agh.soa.soapController;
 
 import agh.soa.model.ParkingPlace;
 import agh.soa.service.IUsersService;
@@ -7,7 +7,7 @@ import javax.ejb.EJB;
 import javax.jws.WebService;
 import java.util.HashSet;
 
-@WebService(endpointInterface = "agh.soa.soap.IParkingService")
+@WebService(endpointInterface = "agh.soa.soapController.IParkingService")
 public class ParkingServiceImpl implements IParkingService{
     private HashSet occupiedParkingPlaces = new HashSet<ParkingPlace>();
 
