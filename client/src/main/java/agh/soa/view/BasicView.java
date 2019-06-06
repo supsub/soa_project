@@ -6,7 +6,6 @@ import agh.soa.service.ITicketsService;
 import agh.soa.service.IUsersService;
 import lombok.Data;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import java.util.List;
@@ -24,6 +23,4 @@ public class BasicView {
     public List<User> getUsers(){
         return usersService.getUsers();
     }
-
-    public String getTest(){return usersService.getTestValue();}
 }

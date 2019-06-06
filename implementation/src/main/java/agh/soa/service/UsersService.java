@@ -19,8 +19,6 @@ import java.util.Stack;
 @Remote(IUsersService.class)
 public class UsersService implements IUsersService {
 
-    Stack stack = new Stack();
-
     @EJB
     private UserRepository userRepository;
 
@@ -29,12 +27,5 @@ public class UsersService implements IUsersService {
         return userRepository.getUsers();
     }
 
-    public String getTestValue(){
-        if(stack.empty()){
-            stack.push("Julo");
-            stack.push("Milosz");
-            stack.push("Grzesiu");
-        }
-        return stack.pop().toString();
-    }
+
 }

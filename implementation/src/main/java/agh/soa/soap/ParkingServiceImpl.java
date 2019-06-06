@@ -16,10 +16,6 @@ public class ParkingServiceImpl implements IParkingService{
 
     //returns true if the place was successfully taken
     public boolean takePlace(ParkingPlace place) {
-        if(usersService != null) {
-            System.out.println("haha not null");
-            usersService.getTestValue();
-        }else System.out.println("service not injected");
         return occupiedParkingPlaces.add(place);
     }
 
