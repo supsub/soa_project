@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
@@ -21,10 +22,15 @@ public class ParkingPlace implements Serializable {
     @Column(name = "taken")
     private boolean taken;
 
+    @Column(name="last_taken_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastTaken;
+
     @ManyToOne
     @JoinColumn(name = "idparkometer")
     private Parkometer parkometer;
 
     @OneToOne(mappedBy = "parkingPlace")
     private Ticket ticket;
+
 }
