@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `tickets`
   `idticket`        INT(11)     NOT NULL AUTO_INCREMENT,
   `expiration_time` DATETIME    NOT NULL,
   `login`           VARCHAR(64) NOT NULL,
-  `idparking_place` INT(11)     NOT NULL,
+  `idparking_place` INT(11),
   PRIMARY KEY (`idticket`),
   INDEX `fk_ticket_users_idx` (`login` ASC) VISIBLE,
   INDEX `fk_tickets_parking_places1_idx` (`idparking_place` ASC) VISIBLE,
