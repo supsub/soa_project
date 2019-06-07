@@ -19,7 +19,8 @@ public class ParkingPlaceService implements IParkingPlaceService{
     private ParkingPlaceRepository parkingPlaceRepository ;
 
     @Override
-    public boolean changeParkingPlaceStatus(ParkingPlace parkingPlace, boolean newStatus) {
+    public boolean changeParkingPlaceStatus(int parkingPlaceID, boolean newStatus) {
+        ParkingPlace parkingPlace = parkingPlaceRepository.getParkingPlaceByID(parkingPlaceID);
         if(newStatus){
             parkingPlace.setLastTaken(Date.from(Instant.now()));
         }

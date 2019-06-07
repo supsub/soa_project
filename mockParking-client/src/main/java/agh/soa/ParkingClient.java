@@ -5,8 +5,8 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class ParkingClient {
     private IParkingService parkingService = new ParkingServiceImplService().getParkingServiceImplPort();
-    private int ordinalNumberFree;
-    private int ordinalNumberTake;
+    private int idToBeFreed;
+    private int idToBeTaken;
     private boolean takeClicked;
     private boolean freeClicked;
     private boolean isParkingPlaceSuccessfullyTaken;
@@ -16,9 +16,7 @@ public class ParkingClient {
         this.freeClicked = true;
         this.takeClicked = false;
         isParkingPlaceSuccessfullyFreed= false;
-        ParkingPlace pp = new ParkingPlace();
-        pp.setOrdinalNumber(this.ordinalNumberFree);
-        this.isParkingPlaceSuccessfullyFreed = this.parkingService.freePlace(pp);
+        this.isParkingPlaceSuccessfullyFreed = this.parkingService.freePlace(idToBeFreed);
         System.out.println(this.isParkingPlaceSuccessfullyFreed);
     }
 
@@ -26,24 +24,22 @@ public class ParkingClient {
         this.takeClicked = true;
         this.freeClicked = false;
         isParkingPlaceSuccessfullyTaken = false;
-        ParkingPlace pp = new ParkingPlace();
-        pp.setOrdinalNumber(this.ordinalNumberTake);
-        this.isParkingPlaceSuccessfullyTaken = this.parkingService.takePlace(pp);
+        this.isParkingPlaceSuccessfullyTaken = this.parkingService.takePlace(idToBeTaken);
         System.out.println(this.isParkingPlaceSuccessfullyTaken);
     }
 
-    public int getOrdinalNumberFree() {
-        return ordinalNumberFree;
+    public int getIdToBeFreed() {
+        return idToBeFreed;
     }
-    public void setOrdinalNumberFree(int ordinalNumberFree) {
-        this.ordinalNumberFree = ordinalNumberFree;
+    public void setIdToBeFreed(int idToBeFreed) {
+        this.idToBeFreed = idToBeFreed;
     }
 
-    public int getOrdinalNumberTake() {
-        return ordinalNumberTake;
+    public int getIdToBeTaken() {
+        return idToBeTaken;
     }
-    public void setOrdinalNumberTake(int ordinalNumberTake) {
-        this.ordinalNumberTake = ordinalNumberTake;
+    public void setIdToBeTaken(int idToBeTaken) {
+        this.idToBeTaken = idToBeTaken;
     }
 
     public boolean isParkingPlaceSuccessfullyTaken() {

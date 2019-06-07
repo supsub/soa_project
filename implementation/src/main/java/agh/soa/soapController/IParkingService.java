@@ -1,7 +1,5 @@
 package agh.soa.soapController;
 
-import agh.soa.model.ParkingPlace;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -12,8 +10,8 @@ import javax.jws.soap.SOAPBinding;
 public interface IParkingService {
 
     @WebMethod
-    boolean takePlace(@WebParam(name = "parkingPlace") ParkingPlace place);
+    boolean takePlace(@WebParam(name = "parkingPlaceID") int placeID);
 
     @WebMethod
-    boolean freePlace(@WebParam(name = "parkingPlace") ParkingPlace place);
+    boolean freePlace(@WebParam(name = "parkingPlaceID") int placeID);
 }

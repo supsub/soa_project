@@ -4,8 +4,6 @@ import agh.soa.model.ParkingPlace;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
-import java.sql.Date;
-import java.time.Instant;
 import java.util.List;
 
 @Stateless
@@ -31,6 +29,19 @@ public class ParkingPlaceRepository extends AbstractRepository {
             Query query = entityManager.createQuery("FROM ParkingPlace where ordinalNumber=:ordinalNumber");
             query.setParameter("ordinalNumber",ordinalID);
             return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ParkingPlace getParkingPlaceByID(int id){
+        try{
+            entityManager.getTransaction().begin();
+
+            Query query = entityManager.createQuery("FROM ParkingPlace where idparking_place=:parkingPlaceID", ParkingPlace.class);
+            query.setParameter("parkingPlaceID", id);
+            return (ParkingPlace) query.getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
         }

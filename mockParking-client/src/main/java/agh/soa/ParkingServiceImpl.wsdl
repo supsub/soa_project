@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://soapController.soa.agh/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ParkingServiceImplService" targetNamespace="http://soapController.soa.agh/">
+  <wsdl:message name="takePlace">
+    <wsdl:part name="parkingPlaceID" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="freePlaceResponse">
+    <wsdl:part name="return" type="xsd:boolean">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="takePlaceResponse">
+    <wsdl:part name="return" type="xsd:boolean">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="freePlace">
+    <wsdl:part name="parkingPlaceID" type="xsd:int">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IParkingService">
+    <wsdl:operation name="freePlace">
+      <wsdl:input message="tns:freePlace" name="freePlace">
+    </wsdl:input>
+      <wsdl:output message="tns:freePlaceResponse" name="freePlaceResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="takePlace">
+      <wsdl:input message="tns:takePlace" name="takePlace">
+    </wsdl:input>
+      <wsdl:output message="tns:takePlaceResponse" name="takePlaceResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ParkingServiceImplServiceSoapBinding" type="tns:IParkingService">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="freePlace">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="freePlace">
+        <soap:body namespace="http://soapController.soa.agh/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="freePlaceResponse">
+        <soap:body namespace="http://soapController.soa.agh/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="takePlace">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="takePlace">
+        <soap:body namespace="http://soapController.soa.agh/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="takePlaceResponse">
+        <soap:body namespace="http://soapController.soa.agh/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ParkingServiceImplService">
+    <wsdl:port binding="tns:ParkingServiceImplServiceSoapBinding" name="ParkingServiceImplPort">
+      <soap:address location="http://localhost:8080/implementation-1.0-SNAPSHOT/ParkingServiceImpl"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

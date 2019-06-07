@@ -14,34 +14,33 @@ import javax.jws.soap.SOAPBinding;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "IParkingService", targetNamespace = "http://soap.soa.agh/")
+@WebService(name = "IParkingService", targetNamespace = "http://soapController.soa.agh/")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-
 public interface IParkingService {
 
 
     /**
      * 
-     * @param parkingPlace
+     * @param parkingPlaceID
      * @return
      *     returns boolean
      */
     @WebMethod
     @WebResult(partName = "return")
     public boolean freePlace(
-        @WebParam(name = "parkingPlace", partName = "parkingPlace")
-        ParkingPlace parkingPlace);
+        @WebParam(name = "parkingPlaceID", partName = "parkingPlaceID")
+        int parkingPlaceID);
 
     /**
      * 
-     * @param parkingPlace
+     * @param parkingPlaceID
      * @return
      *     returns boolean
      */
     @WebMethod
     @WebResult(partName = "return")
     public boolean takePlace(
-        @WebParam(name = "parkingPlace", partName = "parkingPlace")
-        ParkingPlace parkingPlace);
+        @WebParam(name = "parkingPlaceID", partName = "parkingPlaceID")
+        int parkingPlaceID);
 
 }

@@ -17,14 +17,14 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "ParkingServiceImplService", targetNamespace = "http://soap.soa.agh/", wsdlLocation = "http://localhost:8080/implementation-1.0-SNAPSHOT/ParkingServiceImpl?wsdl")
+@WebServiceClient(name = "ParkingServiceImplService", targetNamespace = "http://soapController.soa.agh/", wsdlLocation = "http://localhost:8080/implementation-1.0-SNAPSHOT/ParkingServiceImpl?wsdl")
 public class ParkingServiceImplService
     extends Service
 {
 
     private final static URL PARKINGSERVICEIMPLSERVICE_WSDL_LOCATION;
     private final static WebServiceException PARKINGSERVICEIMPLSERVICE_EXCEPTION;
-    private final static QName PARKINGSERVICEIMPLSERVICE_QNAME = new QName("http://soap.soa.agh/", "ParkingServiceImplService");
+    private final static QName PARKINGSERVICEIMPLSERVICE_QNAME = new QName("http://soapController.soa.agh/", "ParkingServiceImplService");
 
     static {
         URL url = null;
@@ -69,7 +69,7 @@ public class ParkingServiceImplService
      */
     @WebEndpoint(name = "ParkingServiceImplPort")
     public IParkingService getParkingServiceImplPort() {
-        return super.getPort(new QName("http://soap.soa.agh/", "ParkingServiceImplPort"), IParkingService.class);
+        return super.getPort(new QName("http://soapController.soa.agh/", "ParkingServiceImplPort"), IParkingService.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class ParkingServiceImplService
      */
     @WebEndpoint(name = "ParkingServiceImplPort")
     public IParkingService getParkingServiceImplPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://soap.soa.agh/", "ParkingServiceImplPort"), IParkingService.class, features);
+        return super.getPort(new QName("http://soapController.soa.agh/", "ParkingServiceImplPort"), IParkingService.class, features);
     }
 
     private static URL __getWsdlLocation() {
