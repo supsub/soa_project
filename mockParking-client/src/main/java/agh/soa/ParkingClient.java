@@ -5,10 +5,14 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class ParkingClient {
     private IParkingService parkingService = new ParkingServiceImplService().getParkingServiceImplPort();
-    private int idToBeFreed;
-    private int idToBeTaken;
-    private boolean takeClicked;
+    private int ordinalNumberOfFreed;
+    private int parkometerIdOfFreed;
     private boolean freeClicked;
+
+    private int ordinalNumberOfTaken;
+    private int parkometerIdOfTaken;
+    private boolean takeClicked;
+
     private boolean isParkingPlaceSuccessfullyTaken;
     private boolean isParkingPlaceSuccessfullyFreed;
 
@@ -16,30 +20,28 @@ public class ParkingClient {
         this.freeClicked = true;
         this.takeClicked = false;
         isParkingPlaceSuccessfullyFreed= false;
-        this.isParkingPlaceSuccessfullyFreed = this.parkingService.freePlace(idToBeFreed);
-        System.out.println(this.isParkingPlaceSuccessfullyFreed);
+        this.isParkingPlaceSuccessfullyFreed = this.parkingService.freePlace(ordinalNumberOfFreed, parkometerIdOfFreed);
     }
 
     public void takeParkingPlace() {
         this.takeClicked = true;
         this.freeClicked = false;
         isParkingPlaceSuccessfullyTaken = false;
-        this.isParkingPlaceSuccessfullyTaken = this.parkingService.takePlace(idToBeTaken);
-        System.out.println(this.isParkingPlaceSuccessfullyTaken);
+        this.isParkingPlaceSuccessfullyTaken = this.parkingService.takePlace(ordinalNumberOfTaken, parkometerIdOfTaken);
     }
 
-    public int getIdToBeFreed() {
-        return idToBeFreed;
+    public int getOrdinalNumberOfFreed() {
+        return ordinalNumberOfFreed;
     }
-    public void setIdToBeFreed(int idToBeFreed) {
-        this.idToBeFreed = idToBeFreed;
+    public void setOrdinalNumberOfFreed(int ordinalNumberOfFreed) {
+        this.ordinalNumberOfFreed = ordinalNumberOfFreed;
     }
 
-    public int getIdToBeTaken() {
-        return idToBeTaken;
+    public int getParkometerIdOfTaken() {
+        return parkometerIdOfTaken;
     }
-    public void setIdToBeTaken(int idToBeTaken) {
-        this.idToBeTaken = idToBeTaken;
+    public void setParkometerIdOfTaken(int parkometerIdOfTaken) {
+        this.parkometerIdOfTaken = parkometerIdOfTaken;
     }
 
     public boolean isParkingPlaceSuccessfullyTaken() {
@@ -68,5 +70,19 @@ public class ParkingClient {
     }
     public void setFreeClicked(boolean freeClicked) {
         this.freeClicked = freeClicked;
+    }
+
+    public int getParkometerIdOfFreed() {
+        return parkometerIdOfFreed;
+    }
+    public void setParkometerIdOfFreed(int parkometerIdOfFreed) {
+        this.parkometerIdOfFreed = parkometerIdOfFreed;
+    }
+
+    public int getOrdinalNumberOfTaken() {
+        return ordinalNumberOfTaken;
+    }
+    public void setOrdinalNumberOfTaken(int ordinalNumberOfTaken) {
+        this.ordinalNumberOfTaken = ordinalNumberOfTaken;
     }
 }

@@ -21,7 +21,6 @@ public class ParkingPlaceRepository extends AbstractRepository {
         return null;
     }
 
-
     public List<ParkingPlace> getParkingPlaceByOrdinalID(int ordinalID){
         try{
             entityManager.getTransaction().begin();
@@ -48,7 +47,6 @@ public class ParkingPlaceRepository extends AbstractRepository {
         return null;
     }
 
-
     public boolean changeParkingPlaceStatus(ParkingPlace parkingPlace, boolean status){
         try {
             entityManager.getTransaction().begin();
@@ -59,5 +57,18 @@ public class ParkingPlaceRepository extends AbstractRepository {
             return false;
         }
         return true;
+    }
+
+    public ParkingPlace getParkingPlaceByLocation(int ordinalNumber, int parkometerID) {
+        try{
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("FROM ParkingPlace where ordinal_number=:ordinalNumber and idparkometer=:parkometerID", ParkingPlace.class);
+            query.setParameter("ordinalNumber", ordinalNumber);
+            query.setParameter("parkometerID", parkometerID);
+            return (ParkingPlace) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

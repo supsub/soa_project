@@ -10,8 +10,8 @@ import javax.jws.soap.SOAPBinding;
 public interface IParkingService {
 
     @WebMethod
-    boolean takePlace(@WebParam(name = "parkingPlaceID") int placeID);
+    boolean takePlace(@WebParam(name = "ordinalNumber") int ordinalNumber, @WebParam(name = "parkometerID") int parkometerID);
 
     @WebMethod
-    boolean freePlace(@WebParam(name = "parkingPlaceID") int placeID);
+    boolean freePlace(@WebParam(name = "ordinalNumber") int ordinalNumber, @WebParam(name = "parkometerID") int parkometerID);
 }

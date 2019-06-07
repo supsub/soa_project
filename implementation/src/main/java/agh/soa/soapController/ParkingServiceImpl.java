@@ -13,12 +13,12 @@ public class ParkingServiceImpl implements IParkingService{
 
 
     //returns true if the place was successfully taken
-    public boolean takePlace(int placeID) {
-        return parkingPlaceService.changeParkingPlaceStatus(placeID, true);
+    public boolean takePlace(int ordinalNumber, int parkometerID) {
+        return parkingPlaceService.changeParkingPlaceStatus(ordinalNumber, parkometerID, true);
     }
 
     //returns true if the place was successfully freed
-    public boolean freePlace(int placeID) {
-        return parkingPlaceService.changeParkingPlaceStatus(placeID, false);
+    public boolean freePlace(int ordinalNumber, int parkometerID) {
+        return parkingPlaceService.changeParkingPlaceStatus(ordinalNumber, parkometerID, false);
     }
 }

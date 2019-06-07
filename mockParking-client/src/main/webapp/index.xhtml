@@ -8,32 +8,40 @@
 
 <h:body>
     <h:form>
-        <h:outputText style="margin-right: 10px" value="parking place id"> </h:outputText>
-        <h:inputText style="margin-right: 5px" value="#{parkingClient.idToBeTaken}" required="true"/>
+        <h:outputText style="margin-right: 10px" value="parkometer id"> </h:outputText>
+        <h:inputText style="margin-right: 5px" value="#{parkingClient.parkometerIdOfTaken}" required="true"/>
+
+        <h:outputText style="margin-right: 10px" value="ordinal number"> </h:outputText>
+        <h:inputText style="margin-right: 5px" value="#{parkingClient.ordinalNumberOfTaken}" required="true"/>
+
         <h:commandButton value="TAKE PARKING PLACE" action="#{parkingClient.takeParkingPlace()}"/>
     </h:form>
     <h:form>
         <h:outputText id="takeInfoPositive"
-                      value="Place #{parkingClient.idToBeTaken} taken."
+                      value="Place #{parkingClient.ordinalNumberOfTaken} at the parkometer #{parkingClient.parkometerIdOfTaken} was taken."
                       rendered="#{parkingClient.parkingPlaceSuccessfullyTaken and parkingClient.takeClicked}"> </h:outputText>
         <h:outputText id="takeInfoNegative"
-                      value="Place #{parkingClient.idToBeTaken} is already taken!!"
+                      value="Place #{parkingClient.ordinalNumberOfTaken} at the parkometer #{parkingClient.parkometerIdOfTaken} is already taken!!"
                       rendered="#{!parkingClient.parkingPlaceSuccessfullyTaken and parkingClient.takeClicked}"> </h:outputText>
     </h:form>
 
     <br/>
     <br/>
     <h:form>
-        <h:outputText style="margin-right: 10px" value="parking place id"> </h:outputText>
-        <h:inputText style="margin-right: 5px" value="#{parkingClient.idToBeFreed}" required="true"/>
+        <h:outputText style="margin-right: 10px" value="parkometer id"> </h:outputText>
+        <h:inputText style="margin-right: 5px" value="#{parkingClient.parkometerIdOfFreed}" required="true"/>
+
+        <h:outputText style="margin-right: 10px" value="ordinal number"> </h:outputText>
+        <h:inputText style="margin-right: 5px" value="#{parkingClient.ordinalNumberOfFreed}" required="true"/>
+
         <h:commandButton value="FREE PARKING PLACE" action="#{parkingClient.freeParkingPlace()}"/>
     </h:form>
     <h:form>
         <h:outputText id="freeInfoPositive"
-                      value="Place #{parkingClient.idToBeFreed} was freed."
+                      value="Place #{parkingClient.ordinalNumberOfFreed} at the parkometer #{parkingClient.parkometerIdOfFreed} was freed."
                       rendered="#{parkingClient.parkingPlaceSuccessfullyFreed and parkingClient.freeClicked}"> </h:outputText>
         <h:outputText id="freeInfoNegative"
-                      value="Place #{parkingClient.idToBeFreed} is already free!!"
+                      value="Place #{parkingClient.ordinalNumberOfFreed} at the parkometer #{parkingClient.parkometerIdOfFreed} is already free!!"
                       rendered="#{!parkingClient.parkingPlaceSuccessfullyFreed and parkingClient.freeClicked}"> </h:outputText>
     </h:form>
 

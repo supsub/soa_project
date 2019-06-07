@@ -21,26 +21,32 @@ public interface IParkingService {
 
     /**
      * 
-     * @param parkingPlaceID
+     * @param ordinalNumber
+     * @param parkometerID
      * @return
      *     returns boolean
      */
     @WebMethod
     @WebResult(partName = "return")
     public boolean freePlace(
-        @WebParam(name = "parkingPlaceID", partName = "parkingPlaceID")
-        int parkingPlaceID);
+        @WebParam(name = "ordinalNumber", partName = "ordinalNumber")
+        int ordinalNumber,
+        @WebParam(name = "parkometerID", partName = "parkometerID")
+        int parkometerID);
 
     /**
      * 
-     * @param parkingPlaceID
+     * @param ordinalNumber
+     * @param parkometerID
      * @return
      *     returns boolean
      */
     @WebMethod
     @WebResult(partName = "return")
     public boolean takePlace(
-        @WebParam(name = "parkingPlaceID", partName = "parkingPlaceID")
-        int parkingPlaceID);
+        @WebParam(name = "ordinalNumber", partName = "ordinalNumber")
+        int ordinalNumber,
+        @WebParam(name = "parkometerID", partName = "parkometerID")
+        int parkometerID);
 
 }

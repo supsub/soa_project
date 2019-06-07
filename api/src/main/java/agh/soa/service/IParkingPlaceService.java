@@ -2,5 +2,5 @@ package agh.soa.service;
 
 public interface IParkingPlaceService {
 
-    boolean changeParkingPlaceStatus(int parkingPlaceID, boolean newStatus);
+    boolean changeParkingPlaceStatus(int parkingPlaceID, int parkometerID, boolean newStatus);
 }
