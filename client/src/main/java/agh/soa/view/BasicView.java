@@ -1,5 +1,6 @@
 package agh.soa.view;
 
+import agh.soa.dto.TicketDTO;
 import agh.soa.service.IParkometersService;
 import agh.soa.model.User;
 import agh.soa.service.ITicketsService;
@@ -22,5 +23,12 @@ public class BasicView {
 
     public List<User> getUsers(){
         return usersService.getUsers();
+    }
+
+
+    public TicketDTO getMostRecentTicket(){
+        TicketDTO result = ticketsService.getMostRecentTicket();
+        System.out.println(result);
+        return result;
     }
 }
