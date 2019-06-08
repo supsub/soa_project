@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `parking_places`
   `ordinal_number`  INT(11) NOT NULL,
   `idparkometer`    INT(11) NOT NULL,
   `taken`  boolean NOT NULL,
-  `last_taken_time` DATETIME    NOT NULL,
+  `last_taken_time` DATETIME,
   PRIMARY KEY (`idparking_place`),
   INDEX `fk_parking_places_parkometers1_idx` (`idparkometer` ASC) VISIBLE,
   CONSTRAINT `fk_parking_places_parkometers1`
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `tickets`
   `idticket`        INT(11)     NOT NULL AUTO_INCREMENT,
   `expiration_time` DATETIME    NOT NULL,
   `login`           VARCHAR(64) NOT NULL,
-  `idparking_place` INT(11),
+  `idparking_place` INT(11) NOT NULL,
   PRIMARY KEY (`idticket`),
   INDEX `fk_ticket_users_idx` (`login` ASC) VISIBLE,
   INDEX `fk_tickets_parking_places1_idx` (`idparking_place` ASC) VISIBLE,

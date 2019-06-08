@@ -30,3 +30,6 @@ atlassian-ide-plugin.xml
 .nbattrs
 *.log
 build.metadata
+*.class
+*.wsdl
+*package-info.java
