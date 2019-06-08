@@ -9,11 +9,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class App {

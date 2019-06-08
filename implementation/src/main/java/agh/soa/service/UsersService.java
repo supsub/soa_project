@@ -9,7 +9,10 @@ import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 
 @Getter
 @Stateless
@@ -23,4 +26,6 @@ public class UsersService implements IUsersService {
     public List<User> getUsers() {
         return userRepository.getUsers();
     }
+
+
 }

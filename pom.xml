@@ -12,6 +12,7 @@
         <module>api</module>
         <module>implementation</module>
         <module>client</module>
+        <module>mockParking-client</module>
         <module>mockParkometer</module>
     </modules>
 
