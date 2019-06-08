@@ -14,8 +14,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +27,33 @@ public class TicketRepository  extends AbstractRepository{
     @Inject
     UserRepository userRepository;
 
+    public List<TicketDTO> getAllActiveTickets(){
+        List<TicketDTO> result = new ArrayList<>();
+        List<Ticket> interResult = new ArrayList<>();
+        try{
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("FROM Ticket where expirationTime>:now order by expirationTime asc");
+            query.setParameter("now",new Date(), TemporalType.TIMESTAMP);
+
+            interResult = query.getResultList();
+            for (Ticket ticket : interResult) {
+                TicketDTO ticketDTO = new TicketDTO(ticket.getId(),
+                        ticket.getUser().getLogin(),
+                        (int) (ticket.getExpirationTime().getTime()-new Date().getTime()/1000),ticket.getParkingPlace().getParkometer().getStreet().getZone().getName(),
+                        ticket.getParkingPlace().getParkometer().getStreet().getName(),ticket.getParkingPlace().getParkometer().getOrdinalNumber(),ticket.getParkingPlace().getOrdinalNumber(),
+                        ticket.getExpirationTime()
+                        );
+                result.add(ticketDTO);
+
+            }
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
     public TicketDTO buyTicket(TicketDTO ticketDTO) throws NoSuchParkingPlaceException, PlaceAlreadyTakenException, NoSuchUserException {
 
@@ -33,7 +62,7 @@ public class TicketRepository  extends AbstractRepository{
         TicketDTO result = null;
 
 
-        Date expirationDate = Date.from(Instant.now().plusSeconds(60*ticketDTO.getDuration()));
+        Date expirationDate = Date.from(Instant.now().plusSeconds(ticketDTO.getDuration()));
 
         try {
             entityManager.getTransaction().begin();

@@ -5,55 +5,61 @@ import agh.soa.exceptions.NoSuchParkingPlaceException;
 import agh.soa.exceptions.NoSuchUserException;
 import agh.soa.exceptions.PlaceAlreadyTakenException;
 import agh.soa.repository.TicketRepository;
+import agh.soa.timer.TimerTicketExpiration;
 import lombok.Getter;
+import lombok.Setter;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.*;
+import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
-@Stateless
+@Singleton
+@Startup
+@Setter
 @Remote(ITicketsService.class)
 public class TicketsService implements ITicketsService {
 
     @EJB
     private TicketRepository ticketRepository ;
 
+    @Inject
+    private TimerTicketExpiration timerTicketExpiration;
+
     private List<TicketDTO> orderedTickets;
+
+    private TicketDTO mostRecentTicket;
+
+    @PostConstruct
+    public void init(){
+        orderedTickets = ticketRepository.getAllActiveTickets();
+        System.out.println(orderedTickets);
+    }
 
     @Override
     public TicketDTO buyTicket(TicketDTO ticketDTO) throws NoSuchParkingPlaceException, NoSuchUserException, PlaceAlreadyTakenException {
         TicketDTO result = ticketRepository.buyTicket(ticketDTO);
 
-        if (result!=null){
-            if (orderedTickets==null){
-                orderedTickets = new ArrayList<>();
-                orderedTickets.add(result);
-            }
-            if (orderedTickets.size()==0){
-                orderedTickets.add(result);
-            }
-            for (int i = 0; i < orderedTickets.size(); i++) {
-                if (result.getExpirationDate().before(orderedTickets.get(i).getExpirationDate())){
-                    orderedTickets.add(i,result);
-                    break;
-                }
-            }
-
+        orderedTickets = ticketRepository.getAllActiveTickets();
+        mostRecentTicket = orderedTickets.get(0);
+        System.out.println("Size of ordered tickets: "+orderedTickets.size());
+        for (Timer allTimer : timerTicketExpiration.getContext().getTimerService().getAllTimers()) {
+            allTimer.cancel();
         }
+        long timeLeftInMillis = mostRecentTicket.getExpirationDate().getTime() - (new Date().getTime());
+        timerTicketExpiration.createTimer(timeLeftInMillis+1000);
 
         return result;
     }
 
     @Override
     public TicketDTO getMostRecentTicket() {
-        if (orderedTickets==null){
-            return null;
-        }
-        if (orderedTickets.size()==0){
-            return null;
-        }
-        return orderedTickets.get(0);
+
+        return mostRecentTicket;
     }
+
 
 }

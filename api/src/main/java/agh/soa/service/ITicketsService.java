@@ -4,7 +4,9 @@ import agh.soa.dto.TicketDTO;
 import agh.soa.exceptions.NoSuchParkingPlaceException;
 import agh.soa.exceptions.NoSuchUserException;
 import agh.soa.exceptions.PlaceAlreadyTakenException;
+import agh.soa.model.Ticket;
 
+import java.util.Deque;
 import java.util.List;
 
 public interface ITicketsService {
@@ -13,4 +15,7 @@ public interface ITicketsService {
 
     TicketDTO getMostRecentTicket();
 
+    List<TicketDTO> getOrderedTickets();
+
+    void setMostRecentTicket(TicketDTO mostRecentTicket);
 }
