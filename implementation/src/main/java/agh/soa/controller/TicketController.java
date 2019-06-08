@@ -1,6 +1,9 @@
 package agh.soa.controller;
 
 import agh.soa.dto.TicketDTO;
+import agh.soa.exceptions.NoSuchParkingPlaceException;
+import agh.soa.exceptions.NoSuchUserException;
+import agh.soa.exceptions.PlaceAlreadyTakenException;
 import agh.soa.service.ITicketsService;
 
 import javax.ejb.EJB;
@@ -22,11 +25,22 @@ public class TicketController {
     @Consumes("application/json;charset=UTF-8")
     @Produces("application/json")
     public Response buyTicket(TicketDTO ticketDTO){
-        TicketDTO result =  ticketService.buyTicket(ticketDTO);
-        if (result==null){
-            return Response.status(Response.Status.NOT_FOUND).entity("Encountered problems buying ticket ").build();
+
+        try {
+            TicketDTO result = ticketService.buyTicket(ticketDTO);
+            if (result!=null) {
+                return Response.ok("You've just bought ticket! You have "+result.getDuration()+" minutes left.").build();
+            }
+        }catch (NoSuchParkingPlaceException ex){
+            return Response.status(Response.Status.NOT_FOUND).entity("No such parking place!").build();
+        } catch (NoSuchUserException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No such user: "+ticketDTO.getOwner()+"!").build();
+        } catch (PlaceAlreadyTakenException e) {
+            return Response.status(Response.Status.CONFLICT).entity("There is ticket bought for this parking place already!").build();
         }
-        return Response.ok("You've just bought ticket! You have "+result.getDuration()+" minutes left.").build();
+        return Response.status(Response.Status.NO_CONTENT).entity("Something went wrong").build();
+        
+
     }
 
 }
