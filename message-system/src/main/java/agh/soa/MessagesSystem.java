@@ -19,7 +19,7 @@ public class MessagesSystem implements MessageListener {
     public void onMessage(Message message) {
         TextMessage textMessage = (TextMessage) message;
         try{
-            System.out.println(textMessage.getText()+ " arrived.");
+            System.out.println("\"" + textMessage.getText()+ "\" arrived in the MessagesSystem war:).");
         } catch (JMSException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,7 @@
 package agh.soa.view;
 
 import agh.soa.dto.TicketDTO;
-import agh.soa.service.IParkometersService;
+import agh.soa.jms.INotifierSender;
 import agh.soa.model.User;
 import agh.soa.service.ITicketsService;
 import agh.soa.service.IUsersService;
@@ -21,6 +21,15 @@ public class BasicView {
     @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/TicketsService")
     ITicketsService ticketsService;
 
+    @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/NotifierSender")
+    INotifierSender sender;
+
+    String message;
+
+    public void testMethod(){
+        sender.sendMessage(message);
+    }
+
     public List<User> getUsers(){
         return usersService.getUsers();
     }
@@ -31,4 +40,5 @@ public class BasicView {
         System.out.println(result);
         return result;
     }
+
 }

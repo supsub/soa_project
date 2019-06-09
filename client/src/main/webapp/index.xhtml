@@ -27,6 +27,19 @@
     </h:form>
 
     <br/><br/>
+
+    <h:form>
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h:outputText style="margin-right: 10px" value="The message you want to send"> </h:outputText>
+                <h:inputText style="margin-right: 5px" value="#{basicView.message}" required="true"/>
+                <p:commandButton value="send msg(see result in console log)" style="margin-bottom : 30px" styleClass="ui-priority-primary"
+                               action="#{basicView.testMethod()}" />
+            </div>
+        </div>
+    </h:form>
+
+    <br/><br/>
     <h:form class="mytext" rendered="#{userSession.userLoggedIn}" >
             <p:commandButton value="Logout" id="logout" action="#{userSession.logout}" />
     </h:form>
