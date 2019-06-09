@@ -9,6 +9,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Stateless
@@ -17,6 +18,8 @@ public class ParkingPlaceService implements IParkingPlaceService{
 
     @EJB
     private ParkingPlaceRepository parkingPlaceRepository ;
+
+    private List<ParkingPlace> parkingPlacesToBeChecked;
 
     @Override
     public boolean changeParkingPlaceStatus(int ordinalNumber, int parkometerID, boolean newStatus) {

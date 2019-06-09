@@ -27,9 +27,25 @@ public class TicketRepository  extends AbstractRepository{
     @Inject
     UserRepository userRepository;
 
-    public List<TicketDTO> getAllActiveTickets(){
+    public List<Ticket> getAllActiveTickets(){
+        List<Ticket> result = new ArrayList<>();
+        try{
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("FROM Ticket where expirationTime>:now order by expirationTime asc");
+            query.setParameter("now",new Date(), TemporalType.TIMESTAMP);
+
+            result = query.getResultList();
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<TicketDTO> getAllActiveTicketDTOs(){
         List<TicketDTO> result = new ArrayList<>();
-        List<Ticket> interResult = new ArrayList<>();
+        List<Ticket> interResult;
         try{
             entityManager.getTransaction().begin();
             Query query = entityManager.createQuery("FROM Ticket where expirationTime>:now order by expirationTime asc");
@@ -37,9 +53,9 @@ public class TicketRepository  extends AbstractRepository{
 
             interResult = query.getResultList();
             for (Ticket ticket : interResult) {
-                TicketDTO ticketDTO = new TicketDTO(ticket.getId(),
+                TicketDTO ticketDTO = new TicketDTO(ticket.getParkingPlace().getId(),
                         ticket.getUser().getLogin(),
-                        (int) (ticket.getExpirationTime().getTime()-new Date().getTime()/1000),ticket.getParkingPlace().getParkometer().getStreet().getZone().getName(),
+                        (int) (ticket.getExpirationTime().getTime()-new Date().getTime())/1000,ticket.getParkingPlace().getParkometer().getStreet().getZone().getName(),
                         ticket.getParkingPlace().getParkometer().getStreet().getName(),ticket.getParkingPlace().getParkometer().getOrdinalNumber(),ticket.getParkingPlace().getOrdinalNumber(),
                         ticket.getExpirationTime()
                         );
@@ -53,7 +69,7 @@ public class TicketRepository  extends AbstractRepository{
         }
         return result;
     }
-
+    
 
     public TicketDTO buyTicket(TicketDTO ticketDTO) throws NoSuchParkingPlaceException, PlaceAlreadyTakenException, NoSuchUserException {
 

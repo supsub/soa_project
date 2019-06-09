@@ -13,9 +13,9 @@ public interface ITicketsService {
 
     TicketDTO buyTicket(TicketDTO ticketDTO) throws NoSuchParkingPlaceException, NoSuchUserException, PlaceAlreadyTakenException;
 
-    TicketDTO getMostRecentTicket();
+    Ticket getMostRecentTicket();
 
-    List<TicketDTO> getOrderedTickets();
+    List<Ticket> getOrderedTickets();
 
-    void setMostRecentTicket(TicketDTO mostRecentTicket);
+    void setMostRecentTicket(Ticket mostRecentTicket);
 }

@@ -4,6 +4,7 @@ import agh.soa.dto.TicketDTO;
 import agh.soa.exceptions.NoSuchParkingPlaceException;
 import agh.soa.exceptions.NoSuchUserException;
 import agh.soa.exceptions.PlaceAlreadyTakenException;
+import agh.soa.model.Ticket;
 import agh.soa.repository.TicketRepository;
 import agh.soa.timer.TimerTicketExpiration;
 import lombok.Getter;
@@ -29,9 +30,9 @@ public class TicketsService implements ITicketsService {
     @Inject
     private TimerTicketExpiration timerTicketExpiration;
 
-    private List<TicketDTO> orderedTickets;
+    private List<Ticket> orderedTickets;
 
-    private TicketDTO mostRecentTicket;
+    private Ticket mostRecentTicket;
 
     @PostConstruct
     public void init(){
@@ -45,18 +46,18 @@ public class TicketsService implements ITicketsService {
 
         orderedTickets = ticketRepository.getAllActiveTickets();
         mostRecentTicket = orderedTickets.get(0);
-        System.out.println("Size of ordered tickets: "+orderedTickets.size());
+        System.out.println("Size of all active tickets: "+orderedTickets.size());
         for (Timer allTimer : timerTicketExpiration.getContext().getTimerService().getAllTimers()) {
             allTimer.cancel();
         }
-        long timeLeftInMillis = mostRecentTicket.getExpirationDate().getTime() - (new Date().getTime());
-        timerTicketExpiration.createTimer(timeLeftInMillis+1000);
+        long timeLeftInMillis = mostRecentTicket.getExpirationTime().getTime() - (new Date().getTime());
+        timerTicketExpiration.createTimer(timeLeftInMillis, mostRecentTicket.getParkingPlace().getId());
 
         return result;
     }
 
     @Override
-    public TicketDTO getMostRecentTicket() {
+    public Ticket getMostRecentTicket() {
 
         return mostRecentTicket;
     }
