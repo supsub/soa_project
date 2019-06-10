@@ -5,7 +5,6 @@ import agh.soa.repository.ParkingPlaceRepository;
 import agh.soa.timer.TimerParkingPlaceTicketChecker;
 import lombok.Getter;
 
-import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.Timer;
@@ -46,13 +45,9 @@ public class ParkingPlaceService implements IParkingPlaceService{
         }
         if (orderedParkingPlacesToBeChecked!=null && orderedParkingPlacesToBeChecked.size()!=0) {
             ParkingPlace checkedParkingPlace = orderedParkingPlacesToBeChecked.get(0);
-            System.out.println("First to check: " + checkedParkingPlace);
 
             long timeLeftInMillis = checkedParkingPlace.getLastTaken().getTime()+parkingPlaceRepository.getMarginTime()*1000 - (new java.util.Date().getTime());
             timerParkingPlaceTicketChecker.createTimer(timeLeftInMillis);
-        }
-        else {
-            System.out.println("No parking places to check");
         }
         return result;
     }

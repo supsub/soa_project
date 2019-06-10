@@ -1,6 +1,8 @@
 package agh.soa.timer;
 
+import agh.soa.model.ParkingPlace;
 import agh.soa.model.Ticket;
+import agh.soa.repository.ParkingPlaceRepository;
 import agh.soa.repository.TicketRepository;
 import agh.soa.service.ITicketsService;
 import lombok.Getter;
@@ -25,6 +27,8 @@ public class TimerTicketExpiration {
     @Inject
     TicketRepository ticketRepository;
 
+    @Inject
+    private ParkingPlaceRepository parkingPlaceRepository ;
 
     public void createTimer(long duration) {
         context.getTimerService().createTimer(duration+1000, "ticketExpirationTimer");
@@ -33,15 +37,22 @@ public class TimerTicketExpiration {
     @Timeout
     public void timeOutHandler(Timer allTimer) {
 
-        System.out.println("Timeout of ticket for parking place with id: " + ticketService.getMostRecentTicket().getParkingPlace().getId());
-        //ticketRepository.deleteTicketById(ticketService.getMostRecentTicket().getId());
+        ParkingPlace parkingPlace = ticketService.getMostRecentTicket().getParkingPlace();
+        parkingPlace = parkingPlaceRepository.getParkingPlaceByID(parkingPlace.getId());
+
+        if (parkingPlace.isTaken()){
+            System.out.println("<<TICKET EXPIRED>> - Notify worker. There is still car in parking place of id "+parkingPlace.getId());
+        }
+        else{
+            System.out.println("<<TICKET EXPIRED>> - Everything is fine.");
+        }
         for (Timer timer : context.getTimerService().getAllTimers()) {
             if (timer.getInfo()=="ticketExpirationTimer") {
                 timer.cancel();
             }
         }
         List<Ticket> allActiveTickets = ticketRepository.getAllActiveTickets();
-        System.out.println("Size of all active tickets: "+allActiveTickets.size());
+
 
         if (allActiveTickets.size()==0) {
             return;

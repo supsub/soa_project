@@ -32,7 +32,7 @@ public class ParkingPlace implements Serializable {
     @JoinColumn(name = "idparkometer")
     private Parkometer parkometer;
 
-    @OneToMany(mappedBy = "parkingPlace",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parkingPlace", fetch = FetchType.EAGER)
     private List<Ticket> tickets;
 
     @Override

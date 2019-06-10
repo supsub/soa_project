@@ -2,12 +2,10 @@ package agh.soa.repository;
 
 import agh.soa.model.User;
 
-import javax.ejb.Stateless;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
+import javax.annotation.ManagedBean;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @ApplicationScoped
