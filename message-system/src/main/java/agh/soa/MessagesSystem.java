@@ -6,6 +6,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
+import java.util.logging.Logger;
 
 @MessageDriven(
         name = "MessagesSystem",
@@ -16,10 +17,12 @@ import javax.jms.TextMessage;
 )
 public class MessagesSystem implements MessageListener {
 
+    Logger logger = Logger.getLogger(this.getClass().getName());
+
     public void onMessage(Message message) {
         TextMessage textMessage = (TextMessage) message;
         try{
-            System.out.println("\"" + textMessage.getText()+ "\" arrived in the MessagesSystem war:).");
+            logger.info("\"" + textMessage.getText()+ "\" arrived in the MessagesSystem war:).");
         } catch (JMSException e) {
             e.printStackTrace();
         }
