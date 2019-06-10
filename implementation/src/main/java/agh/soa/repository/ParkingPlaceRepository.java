@@ -12,8 +12,7 @@ public class ParkingPlaceRepository extends AbstractRepository {
     public List<ParkingPlace> getAllParkingPlaces(){
         try{
             entityManager.getTransaction().begin();
-
-            Query query = entityManager.createQuery("FROM ParkingPlace");
+            Query query = entityManager.createQuery("FROM ParkingPlace", ParkingPlace.class);
             return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
