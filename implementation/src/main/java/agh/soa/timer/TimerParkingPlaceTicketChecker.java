@@ -39,12 +39,12 @@ public class TimerParkingPlaceTicketChecker {
         }
 
         List<ParkingPlace> orderedParkingPlaces = parkingPlaceService.getOrderedParkingPlacesToBeChecked();
-        ParkingPlace parkingPlaceToBeChecked = orderedParkingPlaces.get(0);
+        ParkingPlace parkingPlaceToBeChecked = parkingPlaceRepository.getParkingPlaceByID(orderedParkingPlaces.get(0).getId());
         System.out.println("Parking place to be checked: "+parkingPlaceToBeChecked);
-        if (parkingPlaceToBeChecked.getTicket()==null) {
+        if (parkingPlaceToBeChecked.getTickets().size()==0) {
             System.out.println("Parking place with id " + parkingPlaceToBeChecked.getId() + " was taken, but ticket wasn't bought");
         }
-        else if(parkingPlaceToBeChecked.getTicket().getExpirationTime().before(new Date())){
+        else if(parkingPlaceToBeChecked.getTickets().get(0).getExpirationTime().before(new Date())){
             System.out.println("Parking place with id " + parkingPlaceToBeChecked.getId() + " had ticket, but it has expired.");
             }
         else{

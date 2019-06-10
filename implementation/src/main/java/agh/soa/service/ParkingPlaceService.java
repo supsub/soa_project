@@ -19,7 +19,7 @@ import java.util.List;
 @Remote(IParkingPlaceService.class)
 public class ParkingPlaceService implements IParkingPlaceService{
 
-    @EJB
+    @Inject
     private ParkingPlaceRepository parkingPlaceRepository ;
 
     private List<ParkingPlace> orderedParkingPlacesToBeChecked;

@@ -32,8 +32,8 @@ public class ParkingPlace implements Serializable {
     @JoinColumn(name = "idparkometer")
     private Parkometer parkometer;
 
-    @OneToOne(mappedBy = "parkingPlace",cascade = CascadeType.ALL)
-    private Ticket ticket;
+    @OneToMany(mappedBy = "parkingPlace",cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 
     @Override
     public String toString() {
@@ -43,7 +43,15 @@ public class ParkingPlace implements Serializable {
                 ", taken=" + taken +
                 ", lastTaken=" + lastTaken +
                 ", parkometerId=" + parkometer.getId()+
-                ", ticket =" + ticket+
+                ", tickets size=" + tickets.size()+
                 '}';
+    }
+
+    public void add(Ticket ticket) {
+        if (tickets == null){
+            tickets = new ArrayList<>();
+        }
+        tickets.add(ticket);
+        ticket.setParkingPlace(this);
     }
 }

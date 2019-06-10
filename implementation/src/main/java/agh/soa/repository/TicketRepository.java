@@ -11,6 +11,8 @@ import lombok.Getter;
 
 import javax.annotation.Resource;
 import javax.ejb.*;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -21,7 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
+@ManagedBean
 public class TicketRepository{
 
 //    @PersistenceContext(unitName = "NewPersistenceUnit")
@@ -32,12 +35,18 @@ public class TicketRepository{
     @Inject
     UserRepository userRepository;
 
+    @Inject
+    private ParkingPlaceRepository parkingPlaceRepository;
+
+
     public List<Ticket> getAllActiveTickets() {
         List<Ticket> result = new ArrayList<>();
         try {
-            Query query = entityManager.createQuery("FROM Ticket order by expirationTime asc");
-
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("FROM Ticket where expirationTime>:now order by expirationTime asc");
+            query.setParameter("now", new Date(), TemporalType.TIMESTAMP);
             result = query.getResultList();
+            entityManager.getTransaction().commit();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,7 +58,7 @@ public class TicketRepository{
         List<TicketDTO> result = new ArrayList<>();
         List<Ticket> interResult;
         try {
-
+            entityManager.getTransaction().begin();
             Query query = entityManager.createQuery("FROM Ticket where expirationTime>:now order by expirationTime asc");
             query.setParameter("now", new Date(), TemporalType.TIMESTAMP);
 
@@ -64,6 +73,7 @@ public class TicketRepository{
                 result.add(ticketDTO);
 
             }
+            entityManager.getTransaction().commit();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,10 +105,10 @@ public class TicketRepository{
                 throw new NoSuchParkingPlaceException();
             }
             parkingPlace = (ParkingPlace) parkingPlaces.get(0);
+            System.out.println("D E B U G - - - -  parkingPlace= "+parkingPlace);
 
-
-            if (parkingPlace.getTicket() != null &&
-                    parkingPlace.getTicket().getExpirationTime().after(new Date())) {
+            if (parkingPlace.getTickets().size() != 0 &&
+                    parkingPlace.getTickets().get(0).getExpirationTime().after(new Date())) {
                 System.out.println("Parking place has ticket already");
                 throw new PlaceAlreadyTakenException();
             }
@@ -112,11 +122,17 @@ public class TicketRepository{
             }
 
 
-
             Ticket ticket = new Ticket(expirationDate, user, parkingPlace);
-            System.out.println("DEBUGGING IN TICKET REPOSITORY: "+ticket);
-            entityManager.persist(ticket);
+            parkingPlace.add(ticket);
+            System.out.println("DEBUGGING IN TICKET REPOSITORY - TICKET TO BE ADDED: "+ticket);
+//            System.out.println("DEBUGGING IN TICKET REPOSITORY - TICKET ALREADY IN PARKING PLACE: "+parkingPlace.getTicket());
+            entityManager.persist(parkingPlace);
+
+
+            //entityManager.merge(parkingPlace);
+            //System.out.println("DEBUGGING IN TICKET REPOSITORY - TICKET THAT SHOULD BE IN PARKING PLACE: "+parkingPlace.getTicket());
             //System.out.println("LOOOOOOOOOOOOOOOOL"+ parkingPlace);
+
             entityManager.getTransaction().commit();
             result = new TicketDTO(parkingPlace.getId(),
                     ticketDTO.getOwner(),
@@ -137,19 +153,23 @@ public class TicketRepository{
         return result;
     }
 
+
     public void deleteTicketById(int id) {
         try{
-
+            entityManager.getTransaction().begin();
             Query query = entityManager.createQuery("FROM Ticket where id=:id");
             query.setParameter("id",id);
             Ticket ticket = (Ticket) query.getSingleResult();
-            ParkingPlace parkingPlace = ticket.getParkingPlace();
-            parkingPlace.setTicket(null);
-            entityManager.merge(parkingPlace);
+//            ParkingPlace parkingPlace = parkingPlaceRepository.getParkingPlaceByID(ticket.getParkingPlace().getId());
+//            parkingPlace.setTicket(null);
             entityManager.remove(ticket);
+            entityManager.getTransaction().commit();
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
 }
+
+

@@ -29,7 +29,7 @@ public class Ticket implements Serializable {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "idparking_place", nullable = false)
+    @JoinColumn(name = "idparking_place")
     private ParkingPlace parkingPlace;
 
     public Ticket(Date expirationTime, User user, ParkingPlace parkingPlace) {

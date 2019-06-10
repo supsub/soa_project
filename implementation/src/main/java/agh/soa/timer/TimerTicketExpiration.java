@@ -34,7 +34,7 @@ public class TimerTicketExpiration {
     public void timeOutHandler(Timer allTimer) {
 
         System.out.println("Timeout of ticket for parking place with id: " + ticketService.getMostRecentTicket().getParkingPlace().getId());
-        ticketRepository.deleteTicketById(ticketService.getMostRecentTicket().getId());
+        //ticketRepository.deleteTicketById(ticketService.getMostRecentTicket().getId());
         for (Timer timer : context.getTimerService().getAllTimers()) {
             if (timer.getInfo()=="ticketExpirationTimer") {
                 timer.cancel();

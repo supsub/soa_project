@@ -3,15 +3,18 @@ package agh.soa.repository;
 import agh.soa.model.User;
 
 import javax.ejb.Stateless;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
+@ManagedBean
 public class UserRepository {
 
-    @PersistenceContext(unitName = "NewPersistenceUnit")
-    private EntityManager entityManager;
+    private EntityManager entityManager = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
 
     public List<User> getUsers() {
         return entityManager.createQuery("SELECT u FROM User u").getResultList();
