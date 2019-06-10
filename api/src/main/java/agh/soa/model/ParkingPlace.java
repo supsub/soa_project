@@ -4,7 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,7 +32,18 @@ public class ParkingPlace implements Serializable {
     @JoinColumn(name = "idparkometer")
     private Parkometer parkometer;
 
-    @OneToOne(mappedBy = "parkingPlace")
+    @OneToOne(mappedBy = "parkingPlace",cascade = CascadeType.ALL)
     private Ticket ticket;
 
+    @Override
+    public String toString() {
+        return "ParkingPlace{" +
+                "id=" + id +
+                ", ordinalNumber=" + ordinalNumber +
+                ", taken=" + taken +
+                ", lastTaken=" + lastTaken +
+                ", parkometerId=" + parkometer.getId()+
+                ", ticket =" + ticket+
+                '}';
+    }
 }
