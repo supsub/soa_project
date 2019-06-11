@@ -28,5 +28,10 @@ public class UsersService implements IUsersService {
         return userRepository.getUsers();
     }
 
+    @Override
+    public User getUserByLogin(String login) {
+        return userRepository.getUserByLogin(login);
+    }
+
 
 }
