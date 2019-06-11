@@ -11,7 +11,7 @@
         <h:outputText style="margin-right: 10px" value="parkometer id"> </h:outputText>
         <h:inputText style="margin-right: 5px" value="#{parkingClient.parkometerIdOfTaken}" required="true"/>
 
-        <h:outputText style="margin-right: 10px" value="ordinal number"> </h:outputText>
+        <h:outputText style="margin-right: 10px" value="parking place number"> </h:outputText>
         <h:inputText style="margin-right: 5px" value="#{parkingClient.ordinalNumberOfTaken}" required="true"/>
 
         <h:commandButton value="TAKE PARKING PLACE" action="#{parkingClient.takeParkingPlace()}"/>
@@ -31,7 +31,7 @@
         <h:outputText style="margin-right: 10px" value="parkometer id"> </h:outputText>
         <h:inputText style="margin-right: 5px" value="#{parkingClient.parkometerIdOfFreed}" required="true"/>
 
-        <h:outputText style="margin-right: 10px" value="ordinal number"> </h:outputText>
+        <h:outputText style="margin-right: 10px" value="parking place number"> </h:outputText>
         <h:inputText style="margin-right: 5px" value="#{parkingClient.ordinalNumberOfFreed}" required="true"/>
 
         <h:commandButton value="FREE PARKING PLACE" action="#{parkingClient.freeParkingPlace()}"/>
