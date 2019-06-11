@@ -136,7 +136,7 @@ SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
 INSERT into USERS
 values ('admin', md5('admin'), 'Manager');
 INSERT into USERS
-values ('user', md5('user'), 'User');
+values ('user', md5('user'), 'Guest');
 INSERT into USERS
 values ('workerA', md5('workerA'), 'User');
 INSERT into USERS

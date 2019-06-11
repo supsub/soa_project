@@ -1,0 +1,3 @@
+<jboss-web>
+    <security-domain>mysqldomain</security-domain>
+</jboss-web>
