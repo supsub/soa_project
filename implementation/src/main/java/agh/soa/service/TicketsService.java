@@ -4,6 +4,7 @@ import agh.soa.dto.TicketDTO;
 import agh.soa.exceptions.NoSuchParkingPlaceException;
 import agh.soa.exceptions.NoSuchUserException;
 import agh.soa.exceptions.PlaceAlreadyTakenException;
+import agh.soa.jms.INotifierSender;
 import agh.soa.model.ParkingPlace;
 import agh.soa.model.Ticket;
 import agh.soa.repository.ParkingPlaceRepository;
@@ -14,10 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Remote;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.ejb.Timer;
+import javax.ejb.*;
 import javax.inject.Inject;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +44,9 @@ public class TicketsService implements ITicketsService {
 
     private Ticket mostRecentTicket;
 
+    @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/NotifierSender")
+    INotifierSender sender;
+
     @PostConstruct
     public void init(){
         orderedTickets = ticketRepository.getAllActiveTickets();
@@ -61,6 +62,8 @@ public class TicketsService implements ITicketsService {
         for (Ticket ticket : parkingPlace.getTickets()) {
             System.out.println(ticket);
         }
+
+        sender.sendMessage("<<TICKET BOUGHT>> ticket was purchased with the id " + parkingPlace.getId());
 
 
         orderedTickets = ticketRepository.getAllActiveTickets();

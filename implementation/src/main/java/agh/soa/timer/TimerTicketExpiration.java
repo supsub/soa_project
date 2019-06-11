@@ -45,11 +45,11 @@ public class TimerTicketExpiration {
         parkingPlace = parkingPlaceRepository.getParkingPlaceByID(parkingPlace.getId());
 
         if (parkingPlace.isTaken()){
-            sender.sendMessage("<<TICKET EXPIRED>> - Notify worker. There is still car in parking place of id "+parkingPlace.getId());
+            sender.sendMessage("<<TICKET EXPIRED>> There is still car in parking place of id "+parkingPlace.getId());
         }
-        else{
-            sender.sendMessage("<<TICKET EXPIRED>> - Everything is fine.");
-        }
+//        else{
+//            sender.sendMessage("<<TICKET EXPIRED>> - Everything is fine.");
+//        }
         for (Timer timer : context.getTimerService().getAllTimers()) {
             if (timer.getInfo()=="ticketExpirationTimer") {
                 timer.cancel();
