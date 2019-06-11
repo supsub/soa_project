@@ -2,6 +2,7 @@ package agh.soa.service;
 
 import agh.soa.jms.INotifierSender;
 import agh.soa.model.ParkingPlace;
+import agh.soa.model.User;
 import agh.soa.repository.ParkingPlaceRepository;
 import agh.soa.timer.TimerParkingPlaceTicketChecker;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.Timer;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.sql.Date;
 import java.time.Instant;
@@ -66,6 +68,13 @@ public class ParkingPlaceService implements IParkingPlaceService{
 
     @Override
     public List<ParkingPlace> getAllParkingPlaces() {
-        return parkingPlaceRepository.getAllParkingPlaces();
+        String login =  FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("Manager")) {
+            return parkingPlaceRepository.getAllParkingPlaces();
+        }
+        else {
+            return parkingPlaceRepository.getAllParkingPlacesOfWorker(login);
+        }
+
     }
 }

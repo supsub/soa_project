@@ -1,6 +1,7 @@
 package agh.soa.repository;
 
 import agh.soa.model.ParkingPlace;
+import agh.soa.model.User;
 import lombok.Getter;
 
 import javax.annotation.ManagedBean;
@@ -97,6 +98,17 @@ public class ParkingPlaceRepository{
             query.setParameter("parkometerID", parkometerID);
             entityManager.getTransaction().commit();
             return (ParkingPlace) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ParkingPlace> getAllParkingPlacesOfWorker(String login){
+        try{
+            Query query = entityManager.createQuery("FROM ParkingPlace where parkometer.street.zone.owner.login=:login", ParkingPlace.class);
+            query.setParameter("login", login);
+            return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
