@@ -72,7 +72,7 @@ public class TicketRepository{
             result = (Ticket) query.getSingleResult();
             return result;
         }catch (NoResultException nre){
-            System.out.println("no result for: parking place id:  " + parkingPlaceId);
+            //System.out.println("no result for: parking place id:  " + parkingPlaceId);
         }catch (Exception e){
             e.printStackTrace();
         }
