@@ -9,6 +9,7 @@
 
 <h:head>
     <title>main module</title>
+
 </h:head>
 <h:body>
     <h:outputLabel value="Hello #{userSession.username}! Your role is: #{userSession.role}. "/><br/>
@@ -19,16 +20,50 @@
 
     <br/><br/><br/><br/><br/>
 
-    <h:form>
-        <h:outputLabel id="counter" value="Value: #{testView.counter.number}"/><br/>
-        <p:commandButton value="Increment!" update="counter" action="#{testView.increment()}"/>
-        <p:commandButton value="Decrement! (only for Managers)" disabled="#{userSession.role.equals('User')}" update="counter" action="#{testView.decrement()}"/>
 
+    <!--CHANGING PASSWORD PART START-->
+
+    <script type="text/javascript">
+        function handleLoginRequest(xhr, status, args) {
+            if (args.validationFailed || !args.loggedIn) {
+                PF('dlg').jq.effect("shake", {times: 5}, 100);
+            } else {
+                PF('dlg').hide();
+                $('#loginLink').fadeOut();
+            }
+        }
+    </script>
+
+    <h:form>
+        <p:messages id="messages" showSummary="true" showDetail="true" autoUpdate="true" closable="false" />
+        <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+            <p:commandButton value="Change user's password" rendered="#{userSession.role.equals('Manager')}"/>
+        </h:outputLink>
+
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+
+        <p:dialog header="Login" widgetVar="dlg" resizable="false">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="username" value="Username:"/>
+                <p:inputText id="username" value="#{basicView.username}" required="true" label="username"/>
+
+                <h:outputLabel for="password" value="New Password:"/>
+                <p:password id="password" value="#{basicView.password}" required="true" label="password"/>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Change password!"
+                                     action="#{basicView.changePassword(basicView.username,basicView.password)}"
+                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
     </h:form>
 
+    <!--CHANGING PASSWORD PART END-->
+
     <br/><br/>
-    <h:form class="mytext" rendered="#{userSession.userLoggedIn}" >
-            <p:commandButton value="Logout" id="logout" action="#{userSession.logout}" />
+    <h:form class="mytext" rendered="#{userSession.userLoggedIn}">
+        <p:commandButton value="Logout" id="logout" action="#{userSession.logout}"/>
     </h:form>
 </h:body>
 </html>
