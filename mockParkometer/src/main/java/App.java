@@ -17,17 +17,22 @@ public class App {
     private static final Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
 
+        String login = null;
+        String street = null;
+        String parkometer = null;
+        String ordinalNumber = null;
+        String duration = null;
 
         System.out.println("Podaj swój login: ");
-        String login = scanner.nextLine();
+        while(login == null) login = scanner.nextLine();
         System.out.println("Podaj ulicę (np. Akacjowa,Aptekarska,Bińczycka,Bosaków): ");
-        String street = scanner.nextLine();
-        System.out.println("Podaj numer parkometru (np. 1,2): ");
-        String parkometer = scanner.nextLine();
+        while(street == null) street = scanner.nextLine();
+        System.out.println("Podaj numer parkometru na ulicy (np. 1,2): ");
+        while(parkometer == null) parkometer = scanner.nextLine();
         System.out.println("Podaj numer miejsca (np. 1,2): ");
-        String ordinalNumber = scanner.nextLine();
-        System.out.println("Na ile minut chcesz wykupić miejsce?: ");
-        String duration = scanner.nextLine();
+        while(ordinalNumber == null) ordinalNumber = scanner.nextLine();
+        System.out.println("Na ile sekund chcesz wykupić miejsce?: ");
+        while(duration == null) duration = scanner.nextLine();
 
         JSONObject json = new JSONObject();
         json.put("street", street);

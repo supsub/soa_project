@@ -9,6 +9,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,7 @@ import java.util.Stack;
 @Remote(IUsersService.class)
 public class UsersService implements IUsersService {
 
-    @EJB
+    @Inject
     private UserRepository userRepository;
 
     @Override

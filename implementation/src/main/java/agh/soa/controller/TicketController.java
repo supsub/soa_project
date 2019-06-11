@@ -29,7 +29,7 @@ public class TicketController {
         try {
             TicketDTO result = ticketService.buyTicket(ticketDTO);
             if (result!=null) {
-                return Response.ok("You've just bought ticket! You have "+result.getDuration()+" minutes left.").build();
+                return Response.ok("You've just bought ticket! You have "+result.getDuration()+" seconds left.").build();
             }
         }catch (NoSuchParkingPlaceException ex){
             return Response.status(Response.Status.NOT_FOUND).entity("No such parking place!").build();

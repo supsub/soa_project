@@ -34,11 +34,9 @@ public class BasicView {
         return usersService.getUsers();
     }
 
-
     public TicketDTO getMostRecentTicket(){
         TicketDTO result = ticketsService.getMostRecentTicket();
         System.out.println(result);
         return result;
     }
-
 }

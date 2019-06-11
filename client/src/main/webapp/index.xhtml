@@ -1,30 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>main module</title>
 </h:head>
+
 <h:body>
-    <h:outputLabel value="Hello #{userSession.username}! Your role is: #{userSession.role}. "/><br/>
-
-    <h:outputLabel value="First user of this application is: #{basicView.users.get(0).login}. "/><br/>
-
-    <h:outputLabel value="Current ticket: #{basicView.mostRecentTicket}. "/><br/>
-
-    <br/><br/><br/><br/><br/>
+    <h:form class="mytext" rendered="#{userSession.userLoggedIn}" >
+        <p:commandButton value="Logout" id="logout" action="#{userSession.logout}" />
+    </h:form>
+    <h:outputLabel value="  Hello #{userSession.username}! Your role is: #{userSession.role}. "/>
+    <br/><br/><br/>
 
     <h:form>
-        <h:outputLabel id="counter" value="Value: #{testView.counter.number}"/><br/>
-        <p:commandButton value="Increment!" update="counter" action="#{testView.increment()}"/>
-        <p:commandButton value="Decrement! (only for Managers)" disabled="#{userSession.role.equals('User')}" update="counter" action="#{testView.decrement()}"/>
+        <p:poll interval="3" listener="#{dashboardBean.polling}" update="parkingPlacesTable" />
+        <p:dataTable id="parkingPlacesTable" var="place" value="#{dashboardBean.parkingPlaces}"
+                     style="margin-right: 90px; margin-left: 90px; text-align: center;">
 
-    </h:form>
+            <p:column headerText="parkometer ID" width="10%">
+                <h:outputText value="#{place.parkometer.id}" />
+            </p:column>
+
+            <p:column headerText="street name" width="50%">
+                <h:outputText value="#{place.parkometer.street.name}" />
+            </p:column>
+
+            <p:column headerText="parkometer number " width="10%">
+                <h:outputText value="#{place.parkometer.ordinalNumber}" />
+            </p:column>
+
+            <p:column headerText="place number" width="10%">
+                <h:outputText value="#{place.ordinalNumber}" />
+            </p:column>
+
+            <p:column headerText="taken" width="20">
+                <h:outputText value="#{place.taken ? 'taken' : 'free'}" />
+            </p:column>
+
+            <p:column headerText="ticket">
+                <h:outputText value="#{dashboardBean.getFormattedTime(place)}"
+                              style="#{dashboardBean.isEverythingOK(place) ? 'color:black' : 'color:red'}" />
+            </p:column>
+
+        </p:dataTable>
 
     <br/><br/>
 
@@ -43,5 +64,7 @@
     <h:form class="mytext" rendered="#{userSession.userLoggedIn}" >
             <p:commandButton value="Logout" id="logout" action="#{userSession.logout}" />
     </h:form>
+
+
 </h:body>
 </html>
