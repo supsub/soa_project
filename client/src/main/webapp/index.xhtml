@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
       xml:lang="en" lang="en">
 
 <h:head>
@@ -10,12 +10,10 @@
     <style type="text/css">
 
     </style>
+
 </h:head>
 
 <h:body>
-    <h:form class="mytext" rendered="#{userSession.userLoggedIn}" >
-        <p:commandButton value="Logout" id="logout" action="#{userSession.logout}" />
-    </h:form>
     <h:outputLabel value="  Hello #{userSession.username}!" />
     <br/><br/><br/>
 
@@ -50,6 +48,51 @@
             </p:column>
 
         </p:dataTable>
+    </h:form>
+
+    <!--CHANGING PASSWORD PART START-->
+
+    <script type="text/javascript">
+        function handleLoginRequest(xhr, status, args) {
+            if (args.validationFailed || !args.loggedIn) {
+                PF('dlg').jq.effect("shake", {times: 5}, 100);
+            } else {
+                PF('dlg').hide();
+                $('#loginLink').fadeOut();
+            }
+        }
+    </script>
+
+    <h:form>
+        <p:messages id="messages" showSummary="true" showDetail="true" autoUpdate="true" closable="false" />
+        <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+            <p:commandButton value="Change user's password" rendered="#{userSession.role.equals('Manager')}"/>
+        </h:outputLink>
+
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+
+        <p:dialog header="Login" widgetVar="dlg" resizable="false">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="username" value="Username:"/>
+                <p:inputText id="username" value="#{basicView.username}" required="true" label="username"/>
+
+                <h:outputLabel for="password" value="New Password:"/>
+                <p:password id="password" value="#{basicView.password}" required="true" label="password"/>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Change password!"
+                                     action="#{basicView.changePassword(basicView.username,basicView.password)}"
+                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
+    </h:form>
+
+    <!--CHANGING PASSWORD PART END-->
+
+    <br/><br/>
+    <h:form class="mytext" rendered="#{userSession.userLoggedIn}">
+        <p:commandButton value="Logout" id="logout" action="#{userSession.logout}"/>
     </h:form>
     <br/><br/><br/>
 
