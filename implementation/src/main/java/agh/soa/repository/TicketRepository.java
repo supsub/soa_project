@@ -11,10 +11,7 @@ import agh.soa.model.User;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +60,26 @@ public class TicketRepository{
             e.printStackTrace();
         }
         return result;
+    }
+
+    public Ticket getLastTicketForParkingPlace(int parkingPlaceId) {
+        Ticket result;
+        try {
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("FROM Ticket where parkingPlace.id=:parkingPlaceId order by expirationTime desc", Ticket.class);
+            query.setMaxResults(1);
+            query.setParameter("parkingPlaceId", parkingPlaceId);
+            result = (Ticket) query.getSingleResult();
+            return result;
+        }catch (NoResultException nre){
+            System.out.println("no result for: parking place id:  " + parkingPlaceId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            entityManager.getTransaction().commit();
+        }
+        return null;
     }
 
     public TicketDTO buyTicket(TicketDTO ticketDTO) throws NoSuchParkingPlaceException, PlaceAlreadyTakenException, NoSuchUserException {
