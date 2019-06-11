@@ -1,7 +1,9 @@
 package agh.soa;
 
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
+import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -17,12 +19,13 @@ import java.util.logging.Logger;
 )
 public class MessagesSystem implements MessageListener {
 
-    Logger logger = Logger.getLogger(this.getClass().getName());
+    @EJB(lookup = "java:app/message-system-1.0-SNAPSHOT/MessagesService")
+    MessagesService messagesService;
 
     public void onMessage(Message message) {
         TextMessage textMessage = (TextMessage) message;
         try{
-            logger.info(textMessage.getText());
+            messagesService.addMessage(((TextMessage) message).getText());
         } catch (JMSException e) {
             e.printStackTrace();
         }

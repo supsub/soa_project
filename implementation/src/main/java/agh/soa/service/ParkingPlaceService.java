@@ -1,10 +1,12 @@
 package agh.soa.service;
 
+import agh.soa.jms.INotifierSender;
 import agh.soa.model.ParkingPlace;
 import agh.soa.repository.ParkingPlaceRepository;
 import agh.soa.timer.TimerParkingPlaceTicketChecker;
 import lombok.Getter;
 
+import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.Timer;
@@ -23,6 +25,9 @@ public class ParkingPlaceService implements IParkingPlaceService{
 
     private List<ParkingPlace> orderedParkingPlacesToBeChecked;
 
+    @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/NotifierSender")
+    INotifierSender sender;
+
     @Inject
     TimerParkingPlaceTicketChecker timerParkingPlaceTicketChecker;
 
@@ -30,9 +35,11 @@ public class ParkingPlaceService implements IParkingPlaceService{
     public boolean changeParkingPlaceStatus(int ordinalNumber, int parkometerID, boolean newStatus) {
         ParkingPlace parkingPlace = parkingPlaceRepository.getParkingPlaceByLocation(ordinalNumber, parkometerID);
         if(newStatus == parkingPlace.isTaken()) return false;
+        if(!newStatus){
+            sender.sendMessage("<<PARKING PLACE FREED>> place freed with the id " + parkingPlace.getId());
+        }
         if(newStatus){
             parkingPlace.setLastTaken(Date.from(Instant.now()));
-
         }
         parkingPlace.setTaken(newStatus);
         boolean result = parkingPlaceRepository.changeParkingPlaceStatus(parkingPlace, newStatus);
