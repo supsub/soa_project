@@ -95,5 +95,10 @@ public class TicketsService implements ITicketsService {
         return ticketRepository.getLastTicketForParkingPlace(parkingPlaceId);
     }
 
+    @Override
+    public List<TicketDTO> getTicketsHistory() {
+        return ticketRepository.getTicketsHistory();
+    }
+
 
 }

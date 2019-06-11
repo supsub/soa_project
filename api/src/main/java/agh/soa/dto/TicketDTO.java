@@ -1,5 +1,6 @@
 package agh.soa.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class TicketDTO implements Serializable {
 
     private int parkingPlaceId;
@@ -26,6 +28,12 @@ public class TicketDTO implements Serializable {
         this.street = street;
         this.parkometerOrd = parkometerOrd;
         this.ordinalNumber = ordinalNumber;
+        this.expirationDate = expirationDate;
+    }
+
+    public TicketDTO(int parkingPlaceId, String owner, Date expirationDate) {
+        this.parkingPlaceId = parkingPlaceId;
+        this.owner = owner;
         this.expirationDate = expirationDate;
     }
 }

@@ -146,7 +146,23 @@ public class TicketRepository{
         return result;
     }
 
+    public List<TicketDTO> getTicketsHistory() {
+        List<Ticket> interResult = new ArrayList<>();
+        List<TicketDTO> result = new ArrayList<>();
+        try {
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("FROM Ticket");
+            interResult = query.getResultList();
+            for (Ticket ticket : interResult) {
+                result.add(new TicketDTO(ticket.getParkingPlace().getId(),ticket.getUser().getLogin(),ticket.getExpirationTime()));
+            }
+            entityManager.getTransaction().commit();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 
 }

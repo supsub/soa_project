@@ -22,4 +22,6 @@ public interface ITicketsService {
     List<Ticket> getAllActiveTicketsForParkingPlace(int parkingPlaceId);
 
     Ticket getLastTicketForParkingPlace(int parkingPlaceId);
+
+    List<TicketDTO> getTicketsHistory();
 }
