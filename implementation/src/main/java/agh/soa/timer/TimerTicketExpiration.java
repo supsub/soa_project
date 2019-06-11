@@ -1,5 +1,6 @@
 package agh.soa.timer;
 
+import agh.soa.jms.INotifierSender;
 import agh.soa.model.ParkingPlace;
 import agh.soa.model.Ticket;
 import agh.soa.repository.ParkingPlaceRepository;
@@ -24,6 +25,9 @@ public class TimerTicketExpiration {
     @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/TicketsService")
     ITicketsService ticketService;
 
+    @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/NotifierSender")
+    INotifierSender sender;
+
     @Inject
     TicketRepository ticketRepository;
 
@@ -41,10 +45,10 @@ public class TimerTicketExpiration {
         parkingPlace = parkingPlaceRepository.getParkingPlaceByID(parkingPlace.getId());
 
         if (parkingPlace.isTaken()){
-            System.out.println("<<TICKET EXPIRED>> - Notify worker. There is still car in parking place of id "+parkingPlace.getId());
+            sender.sendMessage("<<TICKET EXPIRED>> - Notify worker. There is still car in parking place of id "+parkingPlace.getId());
         }
         else{
-            System.out.println("<<TICKET EXPIRED>> - Everything is fine.");
+            sender.sendMessage("<<TICKET EXPIRED>> - Everything is fine.");
         }
         for (Timer timer : context.getTimerService().getAllTimers()) {
             if (timer.getInfo()=="ticketExpirationTimer") {
