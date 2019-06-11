@@ -1,5 +1,6 @@
 package agh.soa.repository;
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 

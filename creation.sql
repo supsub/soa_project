@@ -102,29 +102,29 @@ CREATE TABLE IF NOT EXISTS `parking_places`
   DEFAULT CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-
 -- -----------------------------------------------------
 -- Table `tickets`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tickets`
-(
-  `idticket`        INT(11)     NOT NULL AUTO_INCREMENT,
-  `expiration_time` DATETIME    NOT NULL,
-  `login`           VARCHAR(64) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tickets` (
+  `idticket` INT(11) NOT NULL AUTO_INCREMENT,
+  `expiration_time` DATETIME NOT NULL,
+  `login` VARCHAR(64) NOT NULL,
   `idparking_place` INT(11) NOT NULL,
   PRIMARY KEY (`idticket`),
   INDEX `fk_ticket_users_idx` (`login` ASC) VISIBLE,
   INDEX `fk_tickets_parking_places1_idx` (`idparking_place` ASC) VISIBLE,
   CONSTRAINT `fk_ticket_users`
     FOREIGN KEY (`login`)
-      REFERENCES `users` (`login`),
+    REFERENCES `users` (`login`),
   CONSTRAINT `fk_tickets_parking_places1`
     FOREIGN KEY (`idparking_place`)
-      REFERENCES `parking_places` (`idparking_place`)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+    REFERENCES `parking_places` (`idparking_place`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 SET SQL_MODE = @OLD_SQL_MODE;

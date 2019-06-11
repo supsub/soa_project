@@ -8,5 +8,10 @@ public interface IParkingPlaceService {
 
     boolean changeParkingPlaceStatus(int parkingPlaceID, int parkometerID, boolean newStatus);
 
+    List<ParkingPlace> getOrderedParkingPlacesToBeChecked();
+
+    void popFirst();
+
     List<ParkingPlace> getAllParkingPlaces();
+
 }

@@ -4,7 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,7 +32,26 @@ public class ParkingPlace implements Serializable {
     @JoinColumn(name = "idparkometer")
     private Parkometer parkometer;
 
-    @OneToOne(mappedBy = "parkingPlace")
-    private Ticket ticket;
+    @OneToMany(mappedBy = "parkingPlace", fetch = FetchType.EAGER)
+    private List<Ticket> tickets;
 
+    @Override
+    public String toString() {
+        return "ParkingPlace{" +
+                "id=" + id +
+                ", ordinalNumber=" + ordinalNumber +
+                ", taken=" + taken +
+                ", lastTaken=" + lastTaken +
+                ", parkometerId=" + parkometer.getId()+
+                ", tickets size=" + tickets.size()+
+                '}';
+    }
+
+    public void add(Ticket ticket) {
+        if (tickets == null){
+            tickets = new ArrayList<>();
+        }
+        tickets.add(ticket);
+        ticket.setParkingPlace(this);
+    }
 }
