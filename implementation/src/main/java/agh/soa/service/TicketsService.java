@@ -79,8 +79,17 @@ public class TicketsService implements ITicketsService {
 
     @Override
     public Ticket getMostRecentTicket() {
-
         return mostRecentTicket;
+    }
+
+    @Override
+    public List<Ticket> getAllActiveTicketsForParkingPlace(int parkingPlaceId){
+        return ticketRepository.getAllActiveTicketsForParkingPlace(parkingPlaceId);
+    }
+
+    @Override
+    public Ticket getLastTicketForParkingPlace(int parkingPlaceId){
+        return ticketRepository.getLastTicketForParkingPlace(parkingPlaceId);
     }
 
 
