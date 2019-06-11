@@ -12,8 +12,7 @@
     <h:outputLabel value="Hello #{userSession.username}! Your role is: #{userSession.role}. "/><br/>
     <h:outputLabel value="First user of this application is: #{basicView.users.get(0).login}. "/><br/>
     <br/><br/><br/>
-    <h:outputLabel value="Current ticket: #{basicView.mostRecentTicket}. "/><br/>
-    <br/><br/><br/>
+
     <h:form>
         <h:outputLabel id="counter" value="Value: #{testView.counter.number}"/><br/>
         <p:commandButton value="Increment!" update="counter" action="#{testView.increment()}"/>
@@ -41,7 +40,7 @@
             <h:outputText value="#{place.taken ? 'taken' : 'free'}" />
         </p:column>
 
-        <p:column headerText="last ticket:">
+        <p:column headerText="ticket">
             <h:outputText value="#{dashboardBean.getFormattedTime(place)}"
                           style="#{dashboardBean.hasIllegalState(place) ? 'color:red' : 'color:black'}" />
         </p:column>
