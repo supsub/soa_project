@@ -56,4 +56,9 @@ public class ParkingPlaceService implements IParkingPlaceService{
     public void popFirst() {
         orderedParkingPlacesToBeChecked.remove(0);
     }
+
+    @Override
+    public List<ParkingPlace> getAllParkingPlaces() {
+        return parkingPlaceRepository.getAllParkingPlaces();
+    }
 }

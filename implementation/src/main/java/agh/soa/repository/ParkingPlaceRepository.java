@@ -24,7 +24,7 @@ public class ParkingPlaceRepository{
 
     public List<ParkingPlace> getAllParkingPlaces(){
         try{
-            Query query = entityManager.createQuery("FROM ParkingPlace");
+            Query query = entityManager.createQuery("FROM ParkingPlace", ParkingPlace.class);
             return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();

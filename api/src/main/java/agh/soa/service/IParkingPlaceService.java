@@ -11,4 +11,7 @@ public interface IParkingPlaceService {
     List<ParkingPlace> getOrderedParkingPlacesToBeChecked();
 
     void popFirst();
+
+    List<ParkingPlace> getAllParkingPlaces();
+
 }
