@@ -22,7 +22,7 @@ public class Zone implements Serializable {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "zone")
+    @OneToMany(mappedBy = "zone", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Street> streets;
 
     @OneToOne

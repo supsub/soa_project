@@ -1,5 +1,6 @@
 package agh.soa.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @Table(name="tickets")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Ticket implements Serializable {
 
     @Id
@@ -26,7 +28,7 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "login")
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idparking_place")
     private ParkingPlace parkingPlace;
 
@@ -34,5 +36,17 @@ public class Ticket implements Serializable {
         this.expirationTime = expirationTime;
         this.user = user;
         this.parkingPlace = parkingPlace;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", expirationTime=" + expirationTime +
+                ", user=" + user.getLogin() +
+                ", parkingPlaceId=" + parkingPlace.getId() +
+                '}';
     }
 }
