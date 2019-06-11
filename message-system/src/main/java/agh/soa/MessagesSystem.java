@@ -22,7 +22,7 @@ public class MessagesSystem implements MessageListener {
     public void onMessage(Message message) {
         TextMessage textMessage = (TextMessage) message;
         try{
-            logger.info("\"" + textMessage.getText()+ "\" arrived in the MessagesSystem war:).");
+            logger.info(textMessage.getText());
         } catch (JMSException e) {
             e.printStackTrace();
         }

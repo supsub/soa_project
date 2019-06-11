@@ -1,5 +1,6 @@
 package agh.soa.timer;
 
+import agh.soa.jms.INotifierSender;
 import agh.soa.model.ParkingPlace;
 import agh.soa.model.Ticket;
 import agh.soa.repository.ParkingPlaceRepository;
@@ -23,6 +24,9 @@ public class TimerParkingPlaceTicketChecker {
 
     @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/ParkingPlaceService")
     IParkingPlaceService parkingPlaceService;
+
+    @EJB(lookup = "java:global/implementation-1.0-SNAPSHOT/NotifierSender")
+    INotifierSender sender;
 
     @Inject
     ParkingPlaceRepository parkingPlaceRepository;
@@ -48,10 +52,10 @@ public class TimerParkingPlaceTicketChecker {
         List<Ticket> activeTickets = ticketRepository.getAllActiveTicketsForParkingPlace(parkingPlaceToBeChecked.getId());
 
         if (activeTickets.size()==0) {
-            System.out.println("<<TIMEOUT>> - Parking place with id " + parkingPlaceToBeChecked.getId() + " was taken, but ticket wasn't bought");
+            sender.sendMessage("<<TIMEOUT>> - Parking place with id " + parkingPlaceToBeChecked.getId() + " was taken, but ticket wasn't bought");
         }
         else{
-            System.out.println("<<OK>> - Parking place with id " + parkingPlaceToBeChecked.getId() + " has valid ticket, everything is fine.");
+            sender.sendMessage("<<OK>> - Parking place with id " + parkingPlaceToBeChecked.getId() + " has valid ticket, everything is fine.");
         }
         if (orderedParkingPlaces.size()>1){
             long timeLeftInMillis = orderedParkingPlaces.get(1).getLastTaken().getTime()+parkingPlaceRepository.getMarginTime()*1000- (new Date().getTime());
