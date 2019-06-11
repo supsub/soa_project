@@ -18,4 +18,8 @@ public interface ITicketsService {
     List<Ticket> getOrderedTickets();
 
     void setMostRecentTicket(Ticket mostRecentTicket);
+
+    List<Ticket> getAllActiveTicketsForParkingPlace(int parkingPlaceId);
+
+    Ticket getLastTicketForParkingPlace(int parkingPlaceId);
 }
